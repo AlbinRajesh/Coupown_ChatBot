@@ -1,0 +1,54 @@
+# Core Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+python-dotenv==1.0.0
+python-multipart==0.0.6
+
+# Database - Native async MySQL driver (replaces executor-based blocking)
+mysql-connector-python==8.2.0
+aiomysql==0.2.0
+
+# Cache - Async Redis client
+redis[asyncio]==5.0.1
+
+# Search - FIX: Updated to match Typesense server 27.x
+typesense==0.21.0
+
+# LLM API
+groq>=1.0.0
+
+# HTTP client (must satisfy typesense + groq)
+httpx>=0.28.1
+
+# Rate Limiting
+slowapi==0.1.9
+
+# Logging
+python-json-logger==2.0.7
+
+# Async support
+aiofiles==23.2.1
+
+# Authentication - FIX: Removed python-jose (unused, PyJWT only)
+PyJWT==2.8.0
+passlib[bcrypt]==1.7.4
+
+# # Database Migrations
+# alembic==1.13.1
+
+# Background Job Scheduler
+apscheduler==3.10.4
+
+# Production Server
+gunicorn==21.2.0
+
+# Monitoring (optional)
+prometheus-client==0.19.0
+
+# # Development/Testing
+# pytest==7.4.3
+# pytest-asyncio==0.21.1
+# locust==2.16.1
+# requests==2.31.0

@@ -1,0 +1,16 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+venv
+*.log
+test_cases/
+*.csv
+*.json
+user_queries_dataset.txt
+*.md
+check_fix.py
+fix.py
+real_query.py

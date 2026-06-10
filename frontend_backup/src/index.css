@@ -1,0 +1,141 @@
+/* ── Google Fonts ────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* ── Design Tokens ───────────────────────────────────────────── */
+:root {
+  --radius: 0.875rem;
+
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.97 0.01 80);
+
+  --surface: oklch(0.16 0.008 60);
+  --surface-elevated: oklch(0.2 0.01 60);
+
+  --card: oklch(0.16 0.008 60);
+  --card-foreground: oklch(0.97 0.01 80);
+  --popover: oklch(0.16 0.008 60);
+  --popover-foreground: oklch(0.97 0.01 80);
+
+  /* Brand orange #fb9a00 */
+  --primary: oklch(0.76 0.17 65);
+  --primary-foreground: oklch(0.15 0.01 60);
+  --primary-glow: oklch(0.82 0.18 70);
+
+  --secondary: oklch(0.22 0.01 60);
+  --secondary-foreground: oklch(0.97 0.01 80);
+  --muted: oklch(0.2 0.008 60);
+  --muted-foreground: oklch(0.65 0.02 70);
+  --accent: oklch(0.76 0.17 65);
+  --accent-foreground: oklch(0.15 0.01 60);
+  --destructive: oklch(0.62 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.76 0.17 65);
+
+  --gradient-ambient: radial-gradient(ellipse at top, oklch(0.25 0.05 60 / 0.6), transparent 60%),
+    radial-gradient(ellipse at bottom right, oklch(0.76 0.17 65 / 0.08), transparent 50%);
+  --gradient-hero: radial-gradient(circle at 50% 50%, oklch(0.76 0.17 65 / 0.55) 0%, oklch(0.76 0.17 65 / 0.15) 30%, transparent 70%);
+  --shadow-glow: 0 0 80px oklch(0.76 0.17 65 / 0.4);
+}
+
+/* ── Base ────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    border-color: var(--border);
+    box-sizing: border-box;
+  }
+  html, body {
+  background-color: var(--background);
+  color: var(--foreground);
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;  
+}
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ── Utilities ───────────────────────────────────────────────── */
+@layer utilities {
+  .text-glow {
+    background: linear-gradient(180deg, oklch(0.85 0.17 70), oklch(0.7 0.17 60));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 30px oklch(0.76 0.17 65 / 0.6))
+            drop-shadow(0 0 60px oklch(0.76 0.17 65 / 0.35));
+  }
+
+  .bg-ambient {
+    background-image: var(--gradient-ambient);
+  }
+
+  .bg-hero-glow {
+    background-image: var(--gradient-hero);
+  }
+
+  .grid-noise {
+    background-image:
+      linear-gradient(oklch(1 0 0 / 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(1 0 0 / 0.02) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  .font-display {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: oklch(1 0 0 / 10%);
+    border-radius: 999px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: oklch(1 0 0 / 20%);
+  }
+  /* Hide scrollbar but keep scroll functional */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* ── Animations ──────────────────────────────────────────────── */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.05); }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+@keyframes float-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-float-up {
+  animation: float-up 0.8s ease-out both;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.animate-spin {
+  animation: spin 1s linear infinite;
+}

@@ -1,0 +1,10 @@
+/* Design system tokens & utilities for CORA.
+   Imported by src/styles.css. Keep brand-level decisions here. */
+
+:root {
+  --cora-glow-orange: oklch(0.76 0.17 65);
+  --cora-shadow-search: 0 8px 32px -12px rgba(0, 0, 0, 0.5);
+  --cora-shadow-search-focus: 0 0 50px -15px rgba(251, 154, 0, 0.25);
+  --cora-shadow-send: 0 4px 20px -6px rgba(251, 154, 0, 0.5);
+  --cora-shadow-send-hover: 0 6px 28px -6px rgba(251, 154, 0, 0.6);
+}

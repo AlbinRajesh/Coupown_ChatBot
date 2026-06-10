@@ -1,0 +1,108 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: coupown_mysql
+    ports:
+      - "3307:3306"
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - coupown_net
+
+  redis:
+    image: redis:7-alpine
+    container_name: coupown_redis
+    restart: unless-stopped
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - coupown_net
+
+  typesense:
+    image: typesense/typesense:26.0
+    container_name: coupown_typesense
+    restart: unless-stopped
+    command: >
+      --data-dir /data
+      --api-key=${TYPESENSE_API_KEY}
+      --enable-cors
+    volumes:
+      - typesense_data:/data
+    networks:
+      - coupown_net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: coupown_backend
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      typesense:
+        condition: service_started
+    networks:
+      - coupown_net
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: coupown_worker
+    restart: unless-stopped
+    env_file: .env
+    command: ["python", "worker.py"]
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      typesense:
+        condition: service_started
+    networks:
+      - coupown_net
+
+  frontend:
+    build:
+      context: ./frontend_backup
+      dockerfile: Dockerfile
+    container_name: coupown_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - coupown_net
+
+volumes:
+  mysql_data:
+  redis_data:
+  typesense_data:
+
+networks:
+  coupown_net:
+    driver: bridge
