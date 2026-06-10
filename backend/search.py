@@ -1608,7 +1608,7 @@ def _fetch_offer_shop_ids(category_name: str) -> List[int]:
     """
     base_join = """
         JOIN   shop_details sd ON sd.id = o.shop_id AND sd.status = 1
-        JOIN   users u         ON u.id  = sd.partner_id AND u.subscriber_status = 1
+        JOIN   users u         ON u.id  = sd.partner_id AND u.subscriber_status = 1  AND u.plan_id = 5
         WHERE  o.status   = 1
           AND  o.end_date >= CURDATE()
         LIMIT  200

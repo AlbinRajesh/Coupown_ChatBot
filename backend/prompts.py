@@ -67,10 +67,10 @@ NAME (real business name or job title — EMPTY for generic items/services):
 CATEGORY (return EXACT DB string or ""):
   
   ═══ FOOD & RESTAURANTS ═══
-  biryani/chicken/mutton/beef/fish/parotta/dosa/idli/rice/curry
+  food/hotel/restaurant/dining/food court/food street/food area/biryani/chicken/mutton/beef/fish/parotta/dosa/idli/rice/curry
     → "Restaurent"
-  juice/fresh juice/rose milk/lassi/cold drinks/tender coconut/falooda/milkshake
-    → "Drinks & Beverages"
+  drinks/beverages/juice/fresh juice/rose milk/lassi/cold drinks/tender coconut/falooda/milkshake/soft drink/soda/water
+  → "Drinks & Beverages"
   chips/muruku/cake/bakery/samosa/pastry/snacks/popcorn/ice cream
     → "Snacks & Beverages"
   dry fish/fish pickle/meat/chicken/mutton (standalone)
@@ -245,7 +245,7 @@ OFFER:
 ← "any offers" / "discounts today" / "deals nearby"
 
 {"intent":"offer","type":"category","keywords":["offers","discount"],"specific_type":"offers","category":"Restaurent","name":"","radius_km":0,"sort_by_rating":false}
-← "food offers" / "restaurant deals" / "biryani discount"
+← "food offers" / "restaurant deals" / "biryani discount" / "offers on food" / "food deals" / "hotel offers"
 
 {"intent":"offer","type":"specific","keywords":["offers","deals"],"specific_type":"offers","category":"","name":"Hotel Aqeel","radius_km":0,"sort_by_rating":false}
 ← "offers at Hotel Aqeel" / "SRK Bakery deals"

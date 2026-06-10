@@ -147,6 +147,7 @@ SHOP_JOIN_SQL = """
     INNER JOIN users u                          -- ← add this
         ON  u.id                = sd.partner_id
         AND u.subscriber_status = 1
+        AND u.plan_id           = 5
 
     JOIN  shop_address   sa ON sa.shop_id      = sd.id
                            AND sa.is_default   = 1
@@ -187,7 +188,7 @@ JOB_JOIN_SQL = """
         sa.longitude
     FROM jobsdata j
     INNER JOIN shop_details sd ON sd.id = j.shop_id
-    INNER JOIN users u ON u.id = j.user_id AND u.subscriber_status = 1
+    INNER JOIN users u ON u.id = j.user_id AND u.subscriber_status = 1 AND u.plan_id = 5
     LEFT JOIN shop_address sa ON sa.shop_id = j.shop_id AND sa.is_default = 1
     WHERE j.status = 1
       AND (j.job_endDate IS NULL OR j.job_endDate >= CURDATE())
@@ -227,6 +228,7 @@ PRODUCT_JOIN_SQL = """
     INNER JOIN users u
         ON  u.id                = p.user_id
         AND u.subscriber_status = 1
+        AND u.plan_id           = 5
     INNER JOIN offer o
         ON  o.product_id        = p.id
     INNER JOIN shop_details sd
@@ -279,6 +281,7 @@ SERVICE_JOIN_SQL = """
     INNER JOIN users u
         ON  u.id                = sv.user_id
         AND u.subscriber_status = 1
+        AND u.plan_id           = 5
     INNER JOIN offer o
         ON  o.service_id        = sv.id
         
@@ -793,6 +796,7 @@ def sync_shops(batch_size: int = 1000):
                 INNER JOIN users u
                     ON  u.id                = sd.partner_id
                     AND u.subscriber_status = 1
+                    AND u.plan_id           = 5
 
                 INNER JOIN shop_address sa
                     ON  sa.shop_id    = sd.id
@@ -976,6 +980,7 @@ def sync_products(batch_size: int = 1000) -> bool:
                 INNER JOIN users u
                     ON  u.id                = p.user_id
                     AND u.subscriber_status = 1
+                    AND u.plan_id           = 5
                 INNER JOIN offer o
                     ON  o.product_id        = p.id
                 INNER JOIN shop_details sd
@@ -1097,6 +1102,7 @@ def sync_services(batch_size: int = 1000) -> bool:
                 INNER JOIN users u
                     ON  u.id                = sv.user_id
                     AND u.subscriber_status = 1
+                    AND u.plan_id           = 5
                 INNER JOIN offer o
                     ON  o.service_id        = sv.id
                 INNER JOIN shop_details sd
