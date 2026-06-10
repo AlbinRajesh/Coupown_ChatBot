@@ -543,7 +543,7 @@ async def _call_groq(system_prompt: str, query: str) -> str:
             ],
             max_tokens  = 200,
             temperature = 0,
-            timeout     = 50,
+            timeout     = 10,
         ).choices[0].message.content.strip()
 
     return await asyncio.wait_for(
@@ -711,7 +711,7 @@ def _normalize_query(query: str) -> str:
     q = re.sub(r"\s+", " ", q).strip()
     return q
 
-@cache_result_async(ttl=300, prefix="intent", return_type=ParsedIntent)
+@cache_result_async(ttl=600, prefix="intent", return_type=ParsedIntent)
 async def get_intent(query: str) -> ParsedIntent:
     original_query = query               # ← save original casing first
     query = _normalize_query(query)      # ← now lowercase

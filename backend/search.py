@@ -889,7 +889,7 @@ def search_job_by_title(
 # SHOP SEARCH — rating-based (no location)
 # ─────────────────────────────────────────────────────────────────────────────
 
-@cache_result(ttl=300, prefix="rated_search")
+@cache_result(ttl=600, prefix="rated_search")
 def _rating_search(keyword: str, limit: int = 10) -> List[Dict[str, Any]]:
     """Search shops sorted by rating when the user has not shared location."""
     params = _shop_base_params(keyword or "*", limit)
@@ -916,7 +916,7 @@ def search_shops_by_rating(query: str, limit: int = 10) -> List[Dict[str, Any]]:
 # using the derived lookup table, so no external list is needed.
 # ─────────────────────────────────────────────────────────────────────────────
 
-@cache_result(ttl=300, prefix="geo_search")
+@cache_result(ttl=180, prefix="geo_search")
 def search_shops_parallel(
     keywords: tuple,
     category: str = "",
@@ -1140,7 +1140,7 @@ def _merge_shop_hits(
 # Always filters by status=1 (active jobs only).
 # ─────────────────────────────────────────────────────────────────────────────
 
-@cache_result(ttl=120, prefix="job_search")
+@cache_result(ttl=300, prefix="job_search")
 def search_jobs_typesense(
     keywords: tuple,
     user_lat: Optional[float] = None,
@@ -1222,7 +1222,7 @@ def search_jobs_typesense(
 # Primary keyword = first after sorting by specificity.
 # ─────────────────────────────────────────────────────────────────────────────
 
-@cache_result(ttl=120, prefix="product_search")
+@cache_result(ttl=180, prefix="product_search")
 def search_products_typesense(
     keywords: tuple,
     user_lat: Optional[float] = None,
@@ -1308,7 +1308,7 @@ def search_products_typesense(
 # Category 13 services use user_address stored at index time.
 # ─────────────────────────────────────────────────────────────────────────────
 
-@cache_result(ttl=120, prefix="service_search")
+@cache_result(ttl=180, prefix="service_search")
 def search_services_typesense(
     keywords: tuple,
     user_lat: Optional[float] = None,

@@ -138,10 +138,10 @@ CACHE_DEFAULT_TTL = 300
 CACHE_CATEGORY_TTL = 3600  # 1 hour
 
 # Intent results are query-specific, moderate TTL
-CACHE_INTENT_TTL = 300  # 5 minutes
+CACHE_INTENT_TTL = 600  # 10 minutes
 
 # Search results change frequently but queries repeat
-CACHE_SEARCH_TTL = 120  # 2 minutes
+CACHE_SEARCH_TTL = 180  # 3 minutes
 
 # Job listings change less frequently
 CACHE_JOB_SEARCH_TTL = 300  # 5 minutes

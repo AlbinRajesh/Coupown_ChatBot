@@ -359,8 +359,34 @@ async def chat(req: ChatRequest, request: Request):
         return ChatResponse(success=False, reply="An error occurred. Please try again.")
 
 
-
-
+@api_v1.post("/smart")
+@limiter.limit("30/minute")
+async def smart(req: SmartRequest, request: Request):
+    rid = request.state.request_id
+    try:
+        parsed = await get_intent(req.query)
+        if parsed.intent in ("shop", "job", "product", "service", "offer"):
+            search_req = SearchRequest(
+                query=req.query,
+                userLat=req.userLat,
+                userLng=req.userLng,
+                radiusKm=req.radiusKm,
+            )
+            logger.info(
+                "Search: intent=%s type=%s cat='%s' name='%s'",
+                parsed.intent, parsed.search_type, parsed.category, parsed.name,
+                extra={"request_id": request.state.request_id},
+            )
+            return await handle_search(parsed, search_req)
+        else:
+            history = req.messages or [ChatMessage(role="user", content=req.query)]
+            return await chat(
+                ChatRequest(messages=history, userLat=req.userLat, userLng=req.userLng, radiusKm=req.radiusKm),
+                request,
+            )
+    except Exception as e:
+        logger.error(f"Smart error: {e}", extra={"request_id": rid}, exc_info=True)
+        return error_response()
 
 @api_v1.get("/sync/status")
 async def sync_status():
