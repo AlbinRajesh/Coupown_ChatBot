@@ -117,8 +117,8 @@ CATEGORY (return EXACT DB string or ""):
     → "Education"
   room/lodge/pg/hostel/accommodation/residency
     → "Lodges"
-  shirt/jeans/dress/t-shirt/clothing/boutique
-    → "Clothing"
+  shirt/jeans/dress/t-shirt/clothing/boutique/textiles/saree/fabric
+  → "Clothing"
   shoes/footwear/sandals/heels
     → "Footwear"
   furniture/bed/sofa/cupboard/table
@@ -168,6 +168,9 @@ SHOP:
 {"intent":"shop","type":"general","keywords":["mobile shop","phone store"],"specific_type":"","category":"Mobiles","name":"","radius_km":0,"sort_by_rating":false}
 ← "mobile shop" / "phone store near me" / "Reema Mobiles"
 
+{"intent":"shop","type":"general","keywords":["textiles","clothing"],"specific_type":"","category":"Clothing","name":"","radius_km":0,"sort_by_rating":false}
+← "show me textiles" / "textiles near me" / "textile shop"
+
 PRODUCT:
 {"intent":"product","type":"general","keywords":["biryani","chicken biryani"],"specific_type":"biryani","category":"Restaurent","name":"","radius_km":0,"sort_by_rating":false}
 ← "i need biryani" / "chicken biryani" / "biryani near me" / "biryani வேணும்"
@@ -180,6 +183,9 @@ PRODUCT:
 
 {"intent":"product","type":"general","keywords":["honey","natural honey"],"specific_type":"honey","category":"Grocery,Beauty & Health","name":"","radius_km":0,"sort_by_rating":false}
 ← "i need honey" / "buy honey" / "honey available"
+
+{"intent":"product","type":"general","keywords":["dress","clothing"],"specific_type":"dress","category":"Clothing","name":"","radius_km":0,"sort_by_rating":false}
+← "i need to buy dress" / "where can i buy dress" / "i want to purchase dress"
 
 {"intent":"product","type":"general","keywords":["banana chips","chips"],"specific_type":"banana chips","category":"Snacks & Beverages","name":"","radius_km":0,"sort_by_rating":false}
 ← "banana chips" / "chips available" / "muruku"
