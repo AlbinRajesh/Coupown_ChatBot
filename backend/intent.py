@@ -23,7 +23,6 @@ from constants import (
 # ── LOCAL IMPORTS
 from model import ParsedIntent
 from cache import cache_result_async, cache_result
-from config import config
 from clients import groq_client
 from database import fetch_all
 from prompts import get_intent_system_prompt

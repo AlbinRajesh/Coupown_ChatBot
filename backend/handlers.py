@@ -40,8 +40,6 @@ from model import (
 )
 from constants import (
     TYPESENSE_SEARCH_TIMEOUT,
-    TYPESENSE_HARD_TIMEOUT,
-    CHAT_CONTEXT_TIMEOUT,
     JOB_SEARCH_TIMEOUT,
     PRODUCT_SERVICE_TIMEOUT,
     OFFER_SEARCH_TIMEOUT,
@@ -49,7 +47,6 @@ from constants import (
 
 from intent import is_valid_name
 from search import (
-    get_batch_shop_offers,
     search_job_by_title,
     search_jobs_typesense,
     search_shop_by_name,

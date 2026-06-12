@@ -7,8 +7,6 @@ One instance only — no duplicate job execution.
 """
 
 import asyncio
-import logging
-import os
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 

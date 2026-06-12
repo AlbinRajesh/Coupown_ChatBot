@@ -4,7 +4,6 @@ Structured logging for better observability
 """
 
 import logging
-import json
 import sys
 from datetime import datetime, timezone
 from pythonjsonlogger import jsonlogger

@@ -42,7 +42,7 @@ from datetime import date, timedelta
 # ── path setup
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from database import execute_query, fetch_one, fetch_all
+from database import execute_query, fetch_one
 from typesense_setup import client as ts
 from sync_manage import (
     sync_single_shop, sync_single_job,

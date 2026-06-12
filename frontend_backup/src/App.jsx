@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from 'react'
 import Header from './components/Header'
 import ChatBox from './components/ChatBox'
 import SearchBar from './components/SearchBar'
+import PricingPage from './components/PricingPage'
+import FeaturePage from './components/FeaturePage'
 
 export default function App() {
   const [messages, setMessages] = useState([])
@@ -13,6 +15,7 @@ export default function App() {
   const [locationNudge, setLocationNudge] = useState(false)
   const [requestingLocation, setRequestingLocation] = useState(false)
   const [searchActive, setSearchActive] = useState(false)
+  const [currentPage, setCurrentPage] = useState('home')
   const chatEndRef = useRef(null)
 
   // Load saved chats on mount
@@ -160,7 +163,31 @@ export default function App() {
     }
   }
 
+
+  if (currentPage === 'feature') {
   return (
+    <FeaturePage
+      onNavigate={setCurrentPage}
+      savedChats={savedChats}
+      onNewChat={handleNewChat}
+      onLoadChat={handleLoadChat}
+      onDeleteChat={handleDeleteChat}
+    />
+  )
+}
+
+if (currentPage === 'pricing') {
+  return (
+    <PricingPage
+      onNavigate={setCurrentPage}
+      savedChats={savedChats}
+      onNewChat={handleNewChat}
+      onLoadChat={handleLoadChat}
+      onDeleteChat={handleDeleteChat}
+    />
+  )
+}
+return (
   <div className="fixed inset-0 flex flex-col overflow-hidden bg-background text-foreground">
 
     <div className="pointer-events-none absolute inset-0 z-0">
@@ -169,11 +196,12 @@ export default function App() {
     <div className="pointer-events-none absolute inset-0 z-0 grid-noise opacity-30" />
 
     <Header
-      savedChats={savedChats}
-      onNewChat={handleNewChat}
-      onLoadChat={handleLoadChat}
-      onDeleteChat={handleDeleteChat}
-    />
+    savedChats={savedChats}
+    onNewChat={handleNewChat}
+    onLoadChat={handleLoadChat}
+    onDeleteChat={handleDeleteChat}
+    onNavigate={setCurrentPage}
+  />
 
     {/* Spacer that matches the fixed header height */}
     <div className="shrink-0 h-20 md:h-24" />

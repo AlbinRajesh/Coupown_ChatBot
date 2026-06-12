@@ -26,8 +26,8 @@ from __future__ import annotations
 import os
 import json
 import re
-from datetime import datetime, timedelta
-from typing import Any, Dict, List, Optional, Set, Tuple
+from datetime import datetime
+from typing import Any, Dict, List, Optional
 from collections import defaultdict
 
 import httpx
@@ -777,4 +777,4 @@ if __name__ == "__main__":
     
     with open("correctness_report.json", "w") as f:
         json.dump(report_gen.tests, f, indent=2)
-    print(f"✓ Detailed report saved to: correctness_report.json")
+    print("✓ Detailed report saved to: correctness_report.json")

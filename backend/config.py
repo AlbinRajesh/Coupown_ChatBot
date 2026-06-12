@@ -5,7 +5,6 @@ Ensures all required environment variables are set before startup
 
 import os
 import logging
-from typing import List
 from dotenv import load_dotenv
 
 load_dotenv()

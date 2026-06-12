@@ -1,4 +1,5 @@
-﻿"""
+﻿import threading
+"""
 Database connection pool management
 Handles MySQL connections with pooling for production scalability.
 
@@ -28,7 +29,7 @@ import os
 import asyncio
 import logging
 import time
-from contextlib import asynccontextmanager, contextmanager
+from contextlib import contextmanager
 from typing import Optional
 from constants import DB_POOL_ACQUIRE_TIMEOUT, DB_QUERY_TIMEOUT
 
@@ -163,7 +164,6 @@ _sync_pool: Optional[pooling.MySQLConnectionPool] = None
 _sync_pool_lock = None  # threading.Lock ΓÇö created lazily
 
 
-import threading
 _sync_pool_lock = threading.Lock()
 def _get_sync_lock():
     return _sync_pool_lock

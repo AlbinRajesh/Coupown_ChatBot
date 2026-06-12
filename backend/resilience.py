@@ -5,11 +5,10 @@ for external API calls (Groq, Typesense).
 Used by: search.py, sync_manage.py, main.py
 """
 
-import asyncio
 import logging
 import time
 from functools import wraps
-from typing import Callable, Any, Optional, Type, Tuple
+from typing import Callable, Any, Type, Tuple
 from enum import Enum
 
 logger = logging.getLogger(__name__)

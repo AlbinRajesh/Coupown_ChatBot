@@ -1,3 +1,6 @@
+
+import json
+import csv
 """
 Generate realistic user queries based on actual DB categories & subcategories
 """
@@ -363,10 +366,6 @@ for category, subcats in QUERIES_BY_CATEGORY.items():
 ALL_QUERIES = list(set(ALL_QUERIES))
 ALL_QUERIES.sort()
 
-# Save
-import json
-import csv
-
 # JSON
 with open("user_queries_dataset.json", "w") as f:
     json.dump(ALL_QUERIES, f, indent=2)
@@ -384,7 +383,7 @@ with open("user_queries_dataset.txt", "w") as f:
         f.write(f"{q}\n")
 
 print(f"✅ Generated {len(ALL_QUERIES)} realistic user queries")
-print(f"📁 Saved to: user_queries_dataset.json/csv/txt")
+print("📁 Saved to: user_queries_dataset.json/csv/txt")
 
 # Print sample
 print("\n📊 Sample queries:")

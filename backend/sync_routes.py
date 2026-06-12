@@ -30,13 +30,11 @@ import asyncio
 import logging
 import time
 from typing import Dict, Optional
-import hashlib
 
 from fastapi import APIRouter, Request, Header, HTTPException
 from fastapi.responses import JSONResponse
 from slowapi import Limiter
 from slowapi.util import get_remote_address
-from slowapi.errors import RateLimitExceeded
 
 from config import config
 from cache import cache_result

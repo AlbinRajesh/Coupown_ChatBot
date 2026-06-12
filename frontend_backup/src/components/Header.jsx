@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ChevronDown, MoreVertical, Menu } from 'lucide-react'
 import Sidebar from './Sidebar'
 
-export default function Header({ onNewChat, onLoadChat, onDeleteChat, savedChats }) {
+export default function Header({ onNewChat, onLoadChat, onDeleteChat, savedChats, onNavigate }) {
   const [moreOpen, setMoreOpen] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -42,7 +42,11 @@ export default function Header({ onNewChat, onLoadChat, onDeleteChat, savedChats
       <nav className="fixed left-1/2 top-4 z-30 -translate-x-1/2 md:top-6 hidden md:block">
         <div className="flex items-center gap-6 md:gap-8 h-11 md:h-14 justify-center">
           {['Home', 'Feature', 'Pricing'].map((item) => (
-            <button key={item} className="text-xs font-medium tracking-wide text-white/60 transition hover:text-primary md:text-sm">
+            <button
+              key={item}
+              onClick={() => onNavigate(item.toLowerCase())}
+              className="text-xs font-medium tracking-wide text-white/60 transition hover:text-primary md:text-sm"
+            >
               {item}
             </button>
           ))}
@@ -63,7 +67,9 @@ export default function Header({ onNewChat, onLoadChat, onDeleteChat, savedChats
               <div onClick={(e) => e.stopPropagation()} className="absolute right-0 top-14 w-40 rounded-xl border border-white/5 bg-black/95 backdrop-blur-md shadow-lg">
                 <nav className="flex flex-col">
                   {['Home', 'Feature', 'Pricing'].map((item) => (
-                    <button key={item} onClick={() => setMoreOpen(false)} className="w-full rounded-lg px-4 py-3 text-left text-sm text-white/70 transition hover:bg-white/5 hover:text-primary font-medium border-b border-white/5 last:border-b-0">
+                    <button
+                      key={item}
+                      onClick={() => { setMoreOpen(false); onNavigate(item.toLowerCase()) }} className="w-full rounded-lg px-4 py-3 text-left text-sm text-white/70 transition hover:bg-white/5 hover:text-primary font-medium border-b border-white/5 last:border-b-0">
                       {item}
                     </button>
                   ))}

@@ -36,7 +36,15 @@ from config import config
 from database import close_async_pool, execute_query_async, fetch_all, get_pool_stats, health_check_async
 from cache import get_cache_stats
 from logging_config import configure_logging, get_logger
-from sync_manage import get_queue_stats
+from sync_manage import (
+    get_queue_stats,
+    process_sync_queue,
+    sync_all_shops,
+    sync_all_jobs,
+    sync_all_products,
+    sync_all_services,
+    update_all_ratings,
+)
 from sync_routes import router as sync_router
 
 from model import (
@@ -51,6 +59,7 @@ from prompts import get_chat_system_prompt
 from clients import groq_client
 from search import search_jobs_typesense
 from enrichment import build_result_message
+
 
 # ── Logging ────────────────────────────────────────────────────────────────────
 configure_logging()
