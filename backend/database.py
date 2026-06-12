@@ -1,5 +1,4 @@
-﻿import threading
-"""
+﻿"""
 Database connection pool management
 Handles MySQL connections with pooling for production scalability.
 
@@ -24,7 +23,7 @@ MySQL server must be configured to allow enough connections:
     interactive_timeout = 600
 This is already set in docker-compose.yml (--max_connections=300).
 """
-
+import threading
 import os
 import asyncio
 import logging
