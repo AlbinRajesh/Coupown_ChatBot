@@ -69,13 +69,13 @@ export default function Sidebar({ isOpen, onClose, onNewChat, savedChats = [], o
                   </div>
                   <button
                     onClick={(e) => handleDeleteChat(e, chat.id)}
-                    className="shrink-0 opacity-0 group-hover:opacity-100 transition p-1 rounded-md hover:bg-red-500/10 text-red-400/60 hover:text-red-400"
+                    className="shrink-0 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition p-2 rounded-md hover:bg-red-500/10 active:bg-red-500/20 text-red-400/60 hover:text-red-400"
                     title="Delete"
                     type="button"
                   >
-                    <Trash2 size={13} />
+                    <Trash2 size={16} />
                   </button>
-                </div>
+                </div>  
               </div>
             ))
           )}
