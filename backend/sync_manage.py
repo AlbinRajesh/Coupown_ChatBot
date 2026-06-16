@@ -59,7 +59,7 @@ QUEUE_BATCH_SIZE = 100
 # ═══════════════════════════════════════════════════════════════════════════════
 
 def _invalidate_all_search_caches() -> None:
-    """Invalidate all search cache prefixes. Called after every webhook sync."""
+    """Invalidate all search cache prefixes. Callecd after every webhook sync."""
     try:
         loop = asyncio.get_running_loop()
         for p in (

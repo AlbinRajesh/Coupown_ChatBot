@@ -224,6 +224,7 @@ class ParsedIntent(BaseModel):
     name:           str        = ""         # extracted business/job name
     radius_km:      int        = 0          # user-specified radius (0 = use default)
     sort_by_rating: bool       = False
+    casual_type:    str        = ""  
 
 
 # ═══════════════════════════════════════════════════════════════════════════════

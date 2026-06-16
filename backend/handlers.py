@@ -96,14 +96,65 @@ def _label(intent_key: str, category: str = "") -> str:
 # HANDLERS
 # ═══════════════════════════════════════════════════════════════════════════════
 
-async def _handle_other(parsed: ParsedIntent, req: SearchRequest) -> SearchResponse:
+async def _handle_other(parsed: ParsedIntent, req: SearchRequest, original_query: str = "") -> SearchResponse:
     """
     Casual query or unrecognised intent.
-    Returns success=True with a helpful nudge — not an error state.
+
+    If casual_type is filled → make a small Groq call with chat system prompt
+    to generate a natural CORA reply for ANY casual query.
+
+    If casual_type is empty OR Groq fails → fall back to pre-written replies.
+    Pre-written replies are the safety net — never left with no response.
     """
+    _CASUAL_REPLIES = {
+        "greeting":   "Hi! I'm CORA, your local search assistant. Looking for shops, food, services, jobs, or deals nearby?",
+        "identity":   "I'm CORA — a local discovery assistant. I help you find nearby shops, restaurants, services, job vacancies, and the best deals around you.",
+        "capability": "I can help you find nearby restaurants and food, shops and stores, services like plumbers or salons, job vacancies, and deals and offers near you. Just tell me what you need!",
+        "gratitude":  "Happy to help! Let me know if you need anything else nearby.",
+    }
+
+    # If casual_type is filled → try Groq for a natural reply
+    if parsed.casual_type:
+        try:
+            from clients import groq_client
+            from prompts import get_chat_system_prompt
+
+            def _sync_call():
+                return groq_client.chat.completions.create(
+                    model    = "llama-3.3-70b-versatile",
+                    messages = [
+                        {"role": "system", "content": get_chat_system_prompt()},
+                        {"role": "user",   "content": original_query or req.query},
+                    ],
+                    max_tokens  = 100,   # casual replies are short — no need for more
+                    temperature = 0,
+                    timeout     = 5,
+                ).choices[0].message.content.strip()
+
+            reply = await asyncio.wait_for(
+                asyncio.get_running_loop().run_in_executor(None, _sync_call),
+                timeout=7.0,
+            )
+
+            if reply:
+                return build_response(
+                    success      = True,
+                    message      = reply,
+                    intent_label = _label("other"),
+                )
+
+        except Exception as exc:
+            logger.warning("Casual Groq call failed: %s — using fallback", exc)
+
+    # Fallback — pre-written replies or generic nudge
+    message = _CASUAL_REPLIES.get(
+        parsed.casual_type,
+        "Looking for shops, services, or jobs nearby — what can I help you find?",
+    )
+
     return build_response(
         success      = True,
-        message      = "Looking for shops, services, or jobs nearby — what can I help you find?",
+        message      = message,
         intent_label = _label("other"),
     )
 
@@ -612,7 +663,7 @@ async def handle_search(parsed: ParsedIntent, req: SearchRequest) -> SearchRespo
         intent = parsed.intent
 
         if intent == "other":
-            return await _handle_other(parsed, req)
+            return await _handle_other(parsed, req, original_query=req.query)
         if intent == "offer":
             return await _handle_offer(parsed, req)
         if intent == "product":

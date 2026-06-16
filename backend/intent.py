@@ -169,7 +169,23 @@ def is_casual_query(query: str) -> bool:
 
     return False
 
-
+def determine_casual_type(query: str) -> str:
+    """Classify casual query into greeting | identity | capability | gratitude | ''"""
+    q = query.strip().lower()
+    
+    if any(kw in q for kw in ["hello", "hi", "hey", "good morning", "good evening", "good afternoon", "good night", "howdy"]):
+        return "greeting"
+    
+    if any(kw in q for kw in ["who are you", "what are you", "what is cora", "tell me about", "introduce yourself"]):
+        return "identity"
+    
+    if any(kw in q for kw in ["what can you do", "what features", "how can you help", "what do you offer", "what services"]):
+        return "capability"
+    
+    if any(kw in q for kw in ["thanks", "thank you", "great", "awesome", "excellent", "good job", "nice"]):
+        return "gratitude"
+    
+    return ""
 # ═══════════════════════════════════════════════════════════════════════════════
 # NAME VALIDATION
 # Prevents abstract phrases from triggering exact shop/job lookups
@@ -719,9 +735,10 @@ async def get_intent(query: str) -> ParsedIntent:
         return ParsedIntent(intent="other")
 
     if is_casual_query(query.strip()):
-        logger.info(f"Casual fast-path: '{query[:40]}'")
-        return ParsedIntent(intent="other")
-
+        casual_type = determine_casual_type(query.strip())
+        logger.info(f"Casual fast-path: '{query[:40]}' → {casual_type}")
+        return ParsedIntent(intent="other", casual_type=casual_type)
+    
     _SERVICE_EXACT_GUARD = {
         "call taxi", "water leakage", "pipe repair", "water pipe",
         "tempo traveller", "security camera", "ac repair", "tv repair",
@@ -829,6 +846,13 @@ async def get_intent(query: str) -> ParsedIntent:
         user_category, subcategory_names, category_names
     )
 
+    # Extract casual_type only when intent is "other"
+    casual_type = ""
+    if intent == "other":
+        raw_casual = str(parsed.get("casual_type", "")).strip().lower()
+        if raw_casual in {"greeting", "identity", "capability", "gratitude"}:
+            casual_type = raw_casual
+
     result = ParsedIntent(
         intent         = intent,
         search_type    = search_type,
@@ -838,6 +862,7 @@ async def get_intent(query: str) -> ParsedIntent:
         name           = name,
         radius_km      = radius_km,
         sort_by_rating = sort_by_rating,
+        casual_type    = casual_type,
     )
 
     logger.info(
