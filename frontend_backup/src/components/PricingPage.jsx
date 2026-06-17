@@ -163,6 +163,13 @@ export default function PricingPage({ onNavigate, savedChats, onNewChat, onLoadC
         ))}
       </div>
 
+      {/* ← ADD HERE */}
+      <div className="shrink-0 pb-5 text-center">
+        <p className="text-[11px] text-white/55 italic tracking-wide">
+           Amount may vary by category
+        </p>
+      </div>
+
     </div>
   )
 }
