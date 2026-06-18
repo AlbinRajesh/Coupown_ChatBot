@@ -73,15 +73,15 @@ logger = logging.getLogger(__name__)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 _INTENT_LABELS: Dict[str, str] = {
-    "shop":        "🔍 Searching nearby shops",
-    "job":         "💼 Searching job vacancies",
-    "product":     "🛒 Looking for products",
-    "service":     "🔧 Looking for services",
-    "offer":       "🏷️ Looking for offers",
-    "shop_offer":  "🏷️ Shop offers",
-    "exact_shop":  "🔍 Searching by name",
-    "exact_job":   "💼 Searching job by title",
-    "other":       "🔍 Searching nearby",
+    "shop":        " Searching nearby shops",
+    "job":         " Searching job vacancies",
+    "product":     " Looking for products",
+    "service":     " Looking for services",
+    "offer":       " Looking for offers",
+    "shop_offer":  " Shop offers",
+    "exact_shop":  " Searching by name",
+    "exact_job":   " Searching job by title",
+    "other":       " Searching nearby",
 }
 
 
@@ -149,7 +149,7 @@ async def _handle_other(parsed: ParsedIntent, req: SearchRequest, original_query
     # Fallback — pre-written replies or generic nudge
     message = _CASUAL_REPLIES.get(
         parsed.casual_type,
-        "Looking for shops, services, or jobs nearby — what can I help you find?",
+        "I can only answer shop-related questions. If you're looking for something nearby, please provide more details about which shop, offer, product, service, or job you're referring to — I'll be happy to help you find it.",
     )
 
     return build_response(
